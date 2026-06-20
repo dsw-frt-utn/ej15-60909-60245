@@ -40,11 +40,39 @@ namespace Dsw2026Ej15.Data
         {
             throw new NotImplementedException();
         }
+       
+        public void AddDoctor(Doctor doctor)
+        {
+            _doctors.Add(doctor);
+        }
 
-        public void AddDoctor(Doctor doctor) { throw new NotImplementedException(); }
-        public IEnumerable<Doctor> GetActiveDoctors() { throw new NotImplementedException(); }
-        public Doctor GetDoctorById(Guid id) { throw new NotImplementedException(); }
-        public void DeleteDoctor(Guid id) { throw new NotImplementedException(); }
-        public Speciality GetSpecialityByName(string name) { throw new NotImplementedException(); }
+        public IEnumerable<Doctor> GetActiveDoctors()
+        {
+            return _doctors.Where(d => d.IsActive).ToList();
+        }
+
+        public Doctor GetDoctorById(Guid id)
+        {
+            return _doctors.FirstOrDefault(d => d.Id == id);
+        }
+
+        public void DeleteDoctor(Guid id)
+        {
+            var doctor = _doctors.FirstOrDefault(d => d.Id == id);
+            if (doctor != null)
+            {
+                doctor.IsActive = false;
+            }
+        }
+
+        public Speciality? GetSpecialityByName(string name)
+        {
+            return _specialities.FirstOrDefault(s => s.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public bool LicenseExists(string licenseNumber)
+        {
+            return _doctors.Any(d => d.LicenseNumber.Equals(licenseNumber, StringComparison.OrdinalIgnoreCase));
+        }
     }
 }

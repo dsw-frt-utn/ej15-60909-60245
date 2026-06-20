@@ -1,5 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<Dsw2026Ej15.Data.IPersistence>(Dsw2026Ej15.Data.PersistenceInMemory.Instance);
+
 // Add services to the container.
 
 builder.Services.AddControllers();
